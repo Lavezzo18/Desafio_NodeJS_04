@@ -1,43 +1,45 @@
-/**
- * Required External Modules
- */
+import { Aluno } from "./alunos";
 
-import * as dotenv from "dotenv";
-import express from "express";
-import cors from "cors";
-import helmet from "helmet";
+var express = require('express');
+var app = express();
 
-dotenv.config();
+app.listen(7000, () => {
+    console.log('Executando na porta 7000!');
 
-/**
- * App Variables
- */
-
-if (!process.env.PORT) {
-	process.exit(1);
-}
-
-const PORT: number = parseInt(process.env.PORT as string, 10);
-
-const app = express();
-
-/**
- *  App Configuration
- */
-
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
-
-/**
- * Server Activation
- */
-
-app.listen(PORT, () => {
-	console.log(`Listening on port ${PORT}`);
-
-
-	// CÓDIGO PARA ATENDER OS REQUERIMENTOS
-	// R01, R02, R03, R04, R05
+	const entrada = require("prompt-sync")({ sigint: true });
+	let aluno = new Aluno();
 	
-});
+	let alunos: Array<Aluno> = [];
+	var q: number = 0;
+
+	console.log("Desafio_04");
+
+	q = parseInt(entrada("Total de alunos: "));
+	var name: string;
+	var nota: number;
+	var idade: number;
+	
+	for (let i = 1; i <= q; i++) {
+		
+		name = entrada(`Nome do ${i}º aluno(a): `);
+		
+		nota = parseFloat(entrada(`Nota de ${name}: `));
+		
+		idade = parseInt(entrada(`Idade de ${name}: `));
+	
+		alunos.push({
+		  nome: name,
+		  idade: idade,
+		  nota: nota,
+		});
+	  }
+	  console.log(`Lista de alunos: `);
+	  console.log(alunos);
+	  var soma = alunos.reduce((a, b) => a + b.nota, 0);
+	  var media = soma / q;
+
+	  console.log(`Soma das notas: ${soma}`);
+	  
+	  console.log(`Média dos alunos: ${media}`);
+
+	});
